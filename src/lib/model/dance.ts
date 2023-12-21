@@ -142,7 +142,13 @@ export const dancesMoves: DanceMove[] = [
             ExitType: "",
             Direction: Direction.B,
         }, 
-    ],
+        {
+            name: "Sexy Dip",
+            EntranceType: "",
+            ExitType: "",
+            Direction: Direction.B,
+        }
+        ],
 
     }
 

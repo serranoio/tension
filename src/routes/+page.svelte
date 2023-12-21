@@ -99,6 +99,7 @@ const chooseDance = (e) => {
     background-image: var(--bi);
     border: none;
     box-shadow: 0 0 0 2px var(--c-text-0);
+    color: var(--c-text-0);
 }
 
 .container {
