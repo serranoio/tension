@@ -54,7 +54,7 @@ const chooseDance = (e) => {
     <p class="choose">Choose Your Dance!</p>
 
     <div class="dance-container" on:click={chooseDance}>
-
+        
         {#each dances as dance}
         <button class={`${currentDance === dance.name ? "current" : ""}`}>
             {dance.name}

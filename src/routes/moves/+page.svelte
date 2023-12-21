@@ -8,7 +8,7 @@ import { onMount } from "svelte";
 let currentDance: string = "";
 let danceMoves: Move[] = [];
 let alphabeticalOrder: string[] = [];
-let danceMovesInAlpha: any = [];
+let danceMovesInAlpha: {opened: boolean, character: string, moves: Move[]}[] = [];
 onMount(() => {
     currentDance = localStorage.getItem(CurrentDance)!;
     danceMoves = dancesMoves.filter(p => p.name === currentDance)[0].moves;
@@ -16,11 +16,19 @@ onMount(() => {
     alphabeticalOrder = Array.from(new Set(danceMoves.map((danceMove: Move) => danceMove.name[0])))
     danceMovesInAlpha = alphabeticalOrder.map((character) => {
         return {
+            opened: false,
             character: character,
             moves: danceMoves.filter((danceMoves: Move) => {return danceMoves.name[0] === character})
         }
     })
 })
+
+
+const openGroup = (e: any) => {
+    danceMovesInAlpha.forEach((danceGroup) => {
+        
+    })
+}
 
 </script>
 <div class="container">
@@ -32,8 +40,10 @@ onMount(() => {
     </div>
 
  {#each danceMovesInAlpha as danceGroup}
-   <div class="group">
-    <p class="character" id={`${danceGroup.character}`}>{danceGroup.character}</p><hr/>
+   <div class="group" id={danceGroup.character}>
+    <button class="open-group" on:click={openGroup}>
+        <p class="character" id={`${danceGroup.character}`}>{danceGroup.character}</p><hr/>
+    </button>
     {#each danceGroup.moves as danceMove}
     <DanceMove danceMove={danceMove}></DanceMove>
     {/each}
@@ -42,6 +52,15 @@ onMount(() => {
 </div>
     <Nav></Nav>
 <style>
+
+    .open-group {
+        width: 100%;
+        border: none;
+        background-color: transparent;
+        text-align: start;
+        cursor: pointer;
+    }
+
     .index {
         display: flex;
         justify-content: center;
