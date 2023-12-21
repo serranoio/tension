@@ -25,33 +25,52 @@ onMount(() => {
 
 
 const openGroup = (e: any) => {
-    danceMovesInAlpha.forEach((danceGroup) => {
-        
+    const id = e.target.closest(".group").id;
+
+    console.log(id)
+    danceMovesInAlpha = danceMovesInAlpha.map((danceGroup) => {
+       if (danceGroup.character === id) {
+          danceGroup.opened = !danceGroup.opened;
+       } 
+       return danceGroup
     })
+
 }
 
 </script>
 <div class="container">
     <h1>Bailando {currentDance}</h1>
-    <div class="index">
-        {#each alphabeticalOrder as aOrder}
-        <a href={`#${aOrder}`}>{aOrder}</a> 
-        {/each}
+    <div>
+
+        <div class="index">
+            {#each alphabeticalOrder as aOrder}
+            <a href={`#${aOrder}`}>{aOrder}</a> 
+            {/each}
+        </div>
     </div>
 
  {#each danceMovesInAlpha as danceGroup}
-   <div class="group" id={danceGroup.character}>
+   <div class={`group ${danceGroup.opened ? "opened" : ""}`} id={danceGroup.character}>
     <button class="open-group" on:click={openGroup}>
         <p class="character" id={`${danceGroup.character}`}>{danceGroup.character}</p><hr/>
     </button>
-    {#each danceGroup.moves as danceMove}
-    <DanceMove danceMove={danceMove}></DanceMove>
-    {/each}
+    <div class="dance-move-container">
+        {#each danceGroup.moves as danceMove}
+        <DanceMove danceMove={danceMove}></DanceMove>
+        {/each}
+    </div>
 </div>
 {/each}
 </div>
     <Nav></Nav>
 <style>
+.group .dance-move-container {
+    display: none;   
+}
+
+.opened .dance-move-container {
+    display: block !important;
+}
 
     .open-group {
         width: 100%;
@@ -63,10 +82,13 @@ const openGroup = (e: any) => {
 
     .index {
         display: flex;
-        justify-content: center;
+        /* justify-content: center; */
         align-items: center;
         font-size: var(--text-l);
         gap: var(--space-xl);
+        overflow-y: scroll;
+        padding: 0 var(--space-l);
+        margin-bottom: var(--space-xl);
     }
 
     h1 {
@@ -96,6 +118,7 @@ margin-bottom: var(--space-xl);
 
     .group {
         margin-bottom: var(--space-m);
+        
     }
 </style>
 
